@@ -30,7 +30,9 @@ export function processQueue(currentState: BuildingState): BuildingState {
   const { queue, elevators, floors } = currentState;
   if (queue.length === 0) return currentState;
 
-  const idleElevators = elevators.filter((e) => e.status === ELEVATOR_STATUS.IDLE);
+  const idleElevators = elevators.filter(
+    (e) => e.status === ELEVATOR_STATUS.IDLE
+  );
   if (idleElevators.length === 0) return currentState;
 
   const nextQueue = [...queue];
@@ -40,7 +42,9 @@ export function processQueue(currentState: BuildingState): BuildingState {
 
   while (nextQueue.length > 0) {
     const floorId = nextQueue[0];
-    const available = nextElevators.filter((e) => e.status === ELEVATOR_STATUS.IDLE);
+    const available = nextElevators.filter(
+      (e) => e.status === ELEVATOR_STATUS.IDLE
+    );
     if (available.length === 0) break;
 
     const closest = available.reduce((p, c) =>
@@ -81,7 +85,9 @@ export function processQueue(currentState: BuildingState): BuildingState {
 /**
  * Plays the arrival ding sound.
  */
-export function playDing(audioContextRef: React.MutableRefObject<AudioContext | null>) {
+export function playDing(
+  audioContextRef: React.MutableRefObject<AudioContext | null>
+) {
   try {
     if (!audioContextRef.current) {
       const WinAudioContext =
@@ -113,14 +119,18 @@ export function playDing(audioContextRef: React.MutableRefObject<AudioContext | 
  * Logic for calling an elevator to a specific floor.
  * Returns the new state.
  */
-export function getCallElevatorState(prevState: BuildingState, floorId: number): BuildingState {
+export function getCallElevatorState(
+  prevState: BuildingState,
+  floorId: number
+): BuildingState {
   if (
     prevState.queue.includes(floorId) ||
-    prevState.floors.find((f) => f.id === floorId)?.callStatus !== FLOOR_STATUS.IDLE
+    prevState.floors.find((f) => f.id === floorId)?.callStatus !==
+      FLOOR_STATUS.IDLE
   ) {
     return prevState;
   }
-  
+
   const withCall: BuildingState = {
     ...prevState,
     queue: [...prevState.queue, floorId],
@@ -128,7 +138,7 @@ export function getCallElevatorState(prevState: BuildingState, floorId: number):
       f.id === floorId ? { ...f, callStatus: FLOOR_STATUS.WAITING } : f
     ),
   };
-  
+
   return processQueue(withCall);
 }
 
@@ -152,11 +162,10 @@ export const formatTime = (ms: number) => {
 export const getElevatorColor = (status: ElevatorState['status']) => {
   switch (status) {
     case ELEVATOR_STATUS.MOVING:
-      return '#f66a6a'; // Red
+      return '#f66a6a';
     case ELEVATOR_STATUS.ARRIVED:
-      return '#6edc9e'; // Green
+      return '#6edc9e';
     default:
       return 'black';
   }
 };
-
