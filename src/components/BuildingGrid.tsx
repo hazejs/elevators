@@ -23,7 +23,6 @@ const BuildingGrid: React.FC<BuildingGridProps> = ({
         <div key={floor.id} className='floor-row'>
           <div className='floor-label'>{floor.name}</div>
 
-          {/* Elevator Shafts - Background visualization */}
           {elevators.map((elevator) => {
             const isAtThisFloor =
               elevator.targetFloor === floor.id &&
@@ -55,17 +54,12 @@ const BuildingGrid: React.FC<BuildingGridProps> = ({
         </div>
       ))}
 
-      {/* Absolutely positioned elevators */}
+      {/* Absolute positioned elevators */}
       {elevators.map((elevator) => (
-        <ElevatorUnit 
-          key={elevator.id} 
-          elevator={elevator} 
-          config={config} 
-        />
+        <ElevatorUnit key={elevator.id} elevator={elevator} config={config} />
       ))}
     </div>
   );
 };
 
 export default BuildingGrid;
-
