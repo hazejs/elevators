@@ -22,7 +22,6 @@ const ElevatorUnit: React.FC<ElevatorUnitProps> = ({ elevator, config }) => {
       ? elevator.targetFloor ?? elevator.currentFloor
       : elevator.currentFloor;
 
-  // Rows are rendered top-to-bottom. Floor 9 is row 0, Floor 0 is row 9.
   const rowIndex = config.floorCount - 1 - currentTarget;
   const topPos = rowIndex * 60 + 5;
 
