@@ -53,7 +53,7 @@ export function processQueue(currentState: BuildingState): BuildingState {
         : p
     );
 
-    // Assign locally
+    // Assign
     nextQueue.shift();
     nextElevators = nextElevators.map((e) =>
       e.id === closest.id
